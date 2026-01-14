@@ -2,54 +2,133 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GTM Container Site</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      min-height: 100vh;
-      align-items: center;
-      justify-content: center;
-      background: #f4f6f8;
-    }
-    .container {
-      background: #ffffff;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-      max-width: 600px;
-      text-align: center;
-    }
-    h1 {
-      margin-bottom: 10px;
-    }
-    p {
-      color: #555;
-    }
-  </style>
-  <!-- Google Tag Manager -->
+  <title>GTM Practice Demo Site</title>
+
+<!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-T5XHD8H3');</script>
 <!-- End Google Tag Manager -->
+
+  <style>
+    body { font-family: Arial; padding: 30px; }
+    button { padding: 12px 20px; margin: 10px 0; cursor: pointer; }
+    .product { border: 1px solid #ccc; padding: 20px; margin-top: 20px; }
+  </style>
 </head>
+
 <body>
 
-<!-- Google Tag Manager (noscript) -->
+  <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T5XHD8H3"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-  <div class="container">
-    <h1>Google Tag Manager Container</h1>
-    <p>This website is used only as a container for Google Tag Manager.</p>
-    <p>All tracking, tags, and scripts are managed via GTM.</p>
+  <h1>GTM Practice Demo Website</h1>
+
+  <!-- ================= CTA BUTTONS ================= -->
+  <h2>CTA Buttons</h2>
+
+  <button class="cta-main">Main CTA Button</button>
+
+  <a href="tel:+123456789">
+    <button class="cta-phone">Call Us</button>
+  </a>
+
+  <a href="https://wa.me/123456789" target="_blank">
+    <button class="cta-whatsapp">WhatsApp Us</button>
+  </a>
+
+  <!-- ================= FORM ================= -->
+  <h2>Lead Form (No Thank You Page)</h2>
+
+  <form id="lead-form">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <br><br>
+    <input type="email" name="email" placeholder="Your Email" required />
+    <br><br>
+    <button type="submit">Submit Form</button>
+  </form>
+
+  <!-- ================= PRODUCT ================= -->
+  <div class="product">
+    <h2>Demo Product</h2>
+    <p>Product Name: GTM Course</p>
+    <p>Price: $49</p>
+
+    <button id="add-to-cart">Add to Cart</button>
+    <button id="begin-checkout">Begin Checkout</button>
+    <button id="purchase">Purchase</button>
   </div>
+
+  <!-- ================= JAVASCRIPT ================= -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    // ===== PAGE VIEW =====
+    dataLayer.push({
+      event: "page_view_custom"
+    });
+
+    // ===== FORM SUBMISSION =====
+    document.getElementById("lead-form").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      dataLayer.push({
+        event: "form_submit",
+        form_name: "lead_form"
+      });
+
+      alert("Form submitted (tracked via GTM)");
+    });
+
+    // ===== ECOMMERCE EVENTS =====
+    const productData = {
+      item_name: "GTM Course",
+      item_id: "gtm-001",
+      price: 49,
+      currency: "USD"
+    };
+
+    document.getElementById("add-to-cart").addEventListener("click", function(){
+      dataLayer.push({
+        event: "add_to_cart",
+        ecommerce: {
+          value: 49,
+          currency: "USD",
+          items: [productData]
+        }
+      });
+      alert("Add to Cart tracked");
+    });
+
+    document.getElementById("begin-checkout").addEventListener("click", function(){
+      dataLayer.push({
+        event: "begin_checkout",
+        ecommerce: {
+          value: 49,
+          currency: "USD",
+          items: [productData]
+        }
+      });
+      alert("Begin Checkout tracked");
+    });
+
+    document.getElementById("purchase").addEventListener("click", function(){
+      dataLayer.push({
+        event: "purchase",
+        transaction_id: "T12345",
+        ecommerce: {
+          value: 49,
+          currency: "USD",
+          items: [productData]
+        }
+      });
+      alert("Purchase tracked");
+    });
+  </script>
 
 </body>
 </html>
